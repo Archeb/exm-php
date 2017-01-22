@@ -4,7 +4,13 @@ if($.cookie('replaceimg')=="1"){
 }else{
 	$('#speedupctl').attr('checked',false);
 }
-
+if($.cookie('widescreen')=="1"){
+    $('#pjax-container').removeClass('container');
+    $('.nav-wrapper').removeClass('container');
+	$('#widescreen').attr('checked','');
+}else{
+	$('#widescreen').attr('checked',false);
+}
 //滑动效果
 $(".view-item").each(function() {
 	$(this).addClass("animated fadeIn");
@@ -92,8 +98,12 @@ function loadmore() {
 }
 
 function ChangeBookPage(page) {
-	var ehurl = window.location.search;
-	ehurl = ehurl.substr(2) + "/?p=" + page;
+    if(window.location.search.indexOf('?p=')!=-1){
+        var ehurl = window.location.search.substring(0,window.location.search.indexOf('?p=')-1)
+    }else{
+        var ehurl = window.location.search;
+    }
+	ehurl = ehurl.substr(2) + "/?p=" + (page-1);
 	$('#sidenav-overlay').show();
 	$.ajax({
 		url: 'https://' + apidomain + '/api/eh_gallery.php?url=' + ehurl,
@@ -116,9 +126,25 @@ function ChangeBookPage(page) {
 					previmgdiv.appendChild(previmg);
 					$("#post-preview").append(previmgdiv);
 				}
-				//clean page active
+				//分页设置
+				if(page > 1){
+				    $('#prevpage').removeClass('disabled');
+				    $('#prevpage').addClass('waves-effect');
+				    $('#prevpage').children('a').attr('onclick','ChangeBookPage(' + (page-1) + ')');
+				}else{
+				    $('#prevpage').addClass('disabled');
+				    $('#prevpage').removeClass('waves-effect');
+				}
+				if(page >= data.pagecount){
+				    $('#nextpage').addClass('disabled');
+				    $('#nextpage').removeClass('waves-effect');
+				    $('#nextpage').children('a').attr('onclick',false);
+				}else{
+				    $('#nextpage').removeClass('disabled');
+				    $('#nextpage').addClass('waves-effect');
+				    $('#nextpage').children('a').attr('onclick','ChangeBookPage(' + (page+1) + ')');
+				}
 				$(".active").removeClass("active");
-				//set page active
 				$("#pgi" + page).addClass("active");
 			} else {
 				//失败了
@@ -144,12 +170,12 @@ function ReplaceImgURL(url) {
 	}
 }
 
-function setspeedup(){
-	if($.cookie('replaceimg') == "1") {
-		$.removeCookie('replaceimg');
-		$.cookie('replaceimg', '0', { expires: 365 });
+function savesetting(setitem){
+	if($.cookie(setitem) == "1") {
+		$.removeCookie(setitem);
+		$.cookie(setitem, '0', { expires: 365 });
 	} else {
-		$.removeCookie('replaceimg');
-		$.cookie('replaceimg', '1', { expires: 365 });
+		$.removeCookie(setitem);
+		$.cookie(setitem, '1', { expires: 365 });
 	}
 }

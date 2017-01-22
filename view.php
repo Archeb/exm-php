@@ -92,11 +92,31 @@ $.ajax({
 			}
 			p.find("#book-img").attr("src", (data.imgs[0]));
 			//添加分页
-			$('#pagination').append('<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>');
+			$('#pagination').append('<li id="prevpage" class="disabled"><a><i class="material-icons">chevron_left</i></a></li>');
 			for(var pg = 1; pg <= data.pagecount; pg++) {
 				$('#pagination').append('<li class="waves-effect" id="pgi' + pg + '"><a onclick="ChangeBookPage(' + pg + ')">' + pg + '</a></li>');
 			}
-			$('#pagination').append('<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>');
+			$('#pagination').append('<li id="nextpage" class="waves-effect"><a onclick="ChangeBookPage(2)"><i class="material-icons">chevron_right</i></a></li>');
+			//设置active
+			var page=parseInt(window.location.search.substring(window.location.search.indexOf('?p=')+3))+1;
+			$('#pgi' + page).addClass('active');
+			if(page > 1){
+				    $('#prevpage').removeClass('disabled');
+				    $('#prevpage').addClass('waves-effect');
+				    $('#prevpage').children('a').attr('onclick','ChangeBookPage(' + (page-1) + ')');
+				}else{
+				    $('#prevpage').addClass('disabled');
+				    $('#prevpage').removeClass('waves-effect');
+				}
+				if(page >= data.pagecount){
+				    $('#nextpage').addClass('disabled');
+				    $('#nextpage').removeClass('waves-effect');
+				    $('#nextpage').children('a').attr('onclick',false);
+				}else{
+				    $('#nextpage').removeClass('disabled');
+				    $('#nextpage').addClass('waves-effect');
+				    $('#nextpage').children('a').attr('onclick','ChangeBookPage(' + (page+1) + ')');
+				}
 		} else {
 			//失败了
 			alert("服务器错误代码：" + data["err_info"]["code"] + "\n错误描述：" + data["err_info"]["desc"]);

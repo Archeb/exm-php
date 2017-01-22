@@ -164,14 +164,26 @@
 			<div class="modal-content">
 				<h4>个人设置</h4>
 				<hr />
-				<div class="switch">
-					<label>图片加速</label>
-					<label>
-						<input id="speedupctl" onclick="setspeedup()" type="checkbox">
-						<span class="lever"></span>
-					</label>
-					<label style="color:red">此功能以后会收费</label>
-				</div>
+				<p>
+				    <div class="switch">
+    					<label>图片加速</label>
+    					<label>
+    						<input id="speedupctl" onclick="savesetting('replaceimg')" type="checkbox">
+    						<span class="lever"></span>
+    					</label>
+    					<label style="color:red">移动打不开试试这个 此功能以后会收费</label>
+    				</div>
+				</p>
+				<p>
+    				<div class="switch">
+    					<label>宽屏模式</label>
+    					<label>
+    						<input id="widescreen" onclick="savesetting('widescreen')" type="checkbox">
+    						<span class="lever"></span>
+    					</label>
+    					<label>如果你觉得图太小，请打开宽屏模式</label>
+    				</div>
+    			</p>
 			</div>
 			<div class="modal-footer">
 				<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">
