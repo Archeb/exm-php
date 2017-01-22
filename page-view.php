@@ -117,7 +117,11 @@ if (!isset($_GET['_pjax'])) {
 				</li>
 				<li class="active">
 					<a id="pageinfo-small" href="#!">
+<<<<<<< HEAD
 						
+=======
+						666 / 2333
+>>>>>>> 5db78709e7484a583bf9d3deadf6ad904890fb21
 					</a>
 				</li>
 				<li class="waves-effect">
@@ -160,7 +164,10 @@ $.ajax({
 			$('#bookurl').attr('href', "./view.php?" + data['bookurl']);
 			$('#pageinfo').text(data['pageinfo']);
 			$('#pageinfo-small').text(data['pageinfo']);
+<<<<<<< HEAD
 			$('#pageinfo-small').attr('href', "./view.php?" + data['bookurl']);
+=======
+>>>>>>> 5db78709e7484a583bf9d3deadf6ad904890fb21
 		} else {
 			//失败了
 			alert("服务器错误代码：" + data["err_info"]["code"] + "\n错误描述：" + data["err_info"]["desc"]);
